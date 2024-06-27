@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2024/06/26/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
+    <title>使用Hexo搭建个人网站</title>
+    <url>/2024/06/27/tutorial/build_hexo/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h1><p>Hexo 是一款基于Node.js的快速、简洁且高效的博客框架。Hexo 使用 <a class="link"   href="http://daringfireball.net/projects/markdown/" >Markdown <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>或其他标记语言解析文章，可在几秒内生成静态网页。</p>
+<p><a class="link"   href="https://lexcao.io/zh/posts/jekyll-hugo-hexo/" >why Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
+<li>MacOS（本地）Linux（服务器）</li>
+<li>NodeJS 14.x</li>
+<li>Git</li>
+<li>Hexo 7.2.0</li>
+</ul>
+<h1 id="创建工程并运行"><a href="#创建工程并运行" class="headerlink" title="创建工程并运行"></a>创建工程并运行</h1><p>这里可以直接参照<a class="link"   href="https://hexo.io/zh-cn/docs" >Hexo官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>的步骤操作</p>
+<h2 id="安装时遇到的问题"><a href="#安装时遇到的问题" class="headerlink" title="安装时遇到的问题"></a>安装时遇到的问题</h2><ol>
+<li>MacOS上执行<code>npm install -g hexo-cli</code>安装遇到权限问题</li>
+</ol>
+<blockquote>
+<p>Error: EACCES: permission denied, mkdir ‘&#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules&#x2F;hexo-cli’</p>
+</blockquote>
+<p><a class="link"   href="https://github.com/hexojs/hexo/issues/2785" >解决方案 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> -R `<span class="built_in">whoami</span>` /usr/local/lib/node_modules</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">sudo npm install --unsafe-perm --verbose -g hexo </span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+<h2 id="全部命令"><a href="#全部命令" class="headerlink" title="全部命令"></a>全部命令</h2><p>以为Linux环境为准</p>
+<h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装git环境</span></span><br><span class="line">sudo apt-get install git-core</span><br><span class="line"><span class="comment"># 使用nvm安装nodejs</span></span><br><span class="line"><span class="comment"># installs nvm (Node Version Manager)</span></span><br><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash</span><br><span class="line"><span class="comment"># download and install Node.js (you may need to restart the terminal)</span></span><br><span class="line">nvm install 14</span><br><span class="line"><span class="comment"># 安装hexo</span></span><br><span class="line">sudo npm install --unsafe-perm --verbose -g hexo </span><br><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+<h3 id="创建并运行Hexo"><a href="#创建并运行Hexo" class="headerlink" title="创建并运行Hexo"></a>创建并运行Hexo</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建hexo工程 将hexo-demo换成自己的目录</span></span><br><span class="line">hexo init hexo-demo</span><br><span class="line"><span class="built_in">cd</span> hexo-demo</span><br><span class="line">npm install</span><br><span class="line"><span class="comment"># 启动服务器运行工程</span></span><br><span class="line">hexo server</span><br><span class="line"><span class="comment"># 访问页面 默认http://localhost:4000/</span></span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
 ]]></content>
       <categories>
-        <category>test</category>
+        <category>教程</category>
+        <category>HEXO</category>
       </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>HEXO</tag>
+        <tag>入门</tag>
+      </tags>
   </entry>
 </search>
