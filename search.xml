@@ -1,8 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>内网穿透</title>
+    <url>/2024/07/24/respberry_pi/NAT_Traversal/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h2><p>内网穿透（Network Address Translation Traversal）是一种网络技术，用于在两个或多个位于不同网络内的主机间建立直接的通信连接，即使这些主机都被各自的NAT（网络地址转换）路由器所隔离。NAT路由器的主要功能是将私有IP地址转换为公共IP地址，以便在互联网上进行通信，同时保护内部网络不受外部直接访问。</p>
+<p>例如我们在家庭中组件的局域网就是内网，相对内网我们日常使用的互联网就是外网，一般来说在没有固定公网IP的情况下，外网设备无法直接访问内网设备。而内网穿透技术，就是能让外网的设备找到处于内网的设备，从而实现数据通信。</p>
+<h2 id="zerotier"><a href="#zerotier" class="headerlink" title="zerotier"></a>zerotier</h2><h3 id="在zerotier中创建网络"><a href="#在zerotier中创建网络" class="headerlink" title="在zerotier中创建网络"></a>在zerotier中创建网络</h3><ol>
+<li><p><a class="link"   href="https://my.zerotier.com/" >点击这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>登录&#x2F;注册<code>zerotier</code></p>
+</li>
+<li><p><a id="createNetWork">创建网络</a></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="./NAT_Traversal/zerotier_create_network.png"
+                      alt="image-20240724110528836" style="zoom:50%;" 
+                ></li>
+</ol>
+<h3 id="树莓派中安装zerotier并加入网络"><a href="#树莓派中安装zerotier并加入网络" class="headerlink" title="树莓派中安装zerotier并加入网络"></a>树莓派中安装zerotier并加入网络</h3><ol>
+<li><p>使用脚本安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">curl -s https://install.zerotier.com | sudo bash</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>使用<code>systemctl</code>管理<code>zerotier</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动</span></span><br><span class="line">sudo systemctl start zerotier-one</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">停止</span></span><br><span class="line">sudo systemctl stop zerotier-one</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启</span></span><br><span class="line">sudo systemctl restart zerotier-one</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看状态</span></span><br><span class="line">sudo systemctl status zerotier-one</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>设置成开机自启动</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable zerotier-one</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>将<code>zerotier</code>加入到网络中</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加入网络</span></span><br><span class="line">sudo zerotier-cli join NETWORK_ID</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看已加入网络</span></span><br><span class="line">sudo zerotier-cli listnetworks</span><br></pre></td></tr></table></figure></div>
+
+<p>其中<code>NETWORK_ID</code>为<a href="#createNetWork">创建网络</a>步骤中已创建网络的<code>NETWORK ID</code></p>
+</li>
+<li><p>首次加入网络后登录<code>zerotier</code>对新设备进行认证</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="./NAT_Traversal/auth_new_client.png"
+                      alt="认证" style="zoom:50%;" 
+                ></li>
+</ol>
+<h3 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h3><h2 id="natapp"><a href="#natapp" class="headerlink" title="natapp"></a>natapp</h2><h3 id="创建隧道"><a href="#创建隧道" class="headerlink" title="创建隧道"></a>创建隧道</h3><ol>
+<li><p><a class="link"   href="https://natapp.cn/login" >点击这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>登录&#x2F;注册<code>natapp</code></p>
+</li>
+<li><p>购买隧道</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="./NAT_Traversal/buy_tunnel.png"
+                      alt="image-20240724113055777" style="zoom:50%;" 
+                >
+</li>
+<li><p>点击已购买的隧道, 查看authtoken</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="./NAT_Traversal/copy_auth.png"
+                      alt="image-20240724113510300" style="zoom:50%;" 
+                ></li>
+</ol>
+<h3 id="树莓派中安装natapp"><a href="#树莓派中安装natapp" class="headerlink" title="树莓派中安装natapp"></a>树莓派中安装natapp</h3><ol>
+<li><p><a class="link"   href="https://natapp.cn/#download" >点击这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>下载树莓派使用的客户端, 放在目录 <code>/usr/natapp/</code> 运行</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">利用curl在树莓派上直接下载natapp, 也可手动下载后上传</span></span><br><span class="line">sudo curl https://download.natapp.cn/assets/downloads/clients/2_4_0/natapp_linux_arm/natapp -o natapp</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">赋运行权限</span></span><br><span class="line">sudo chmod a+x /usr/natapp/natapp</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>下载<code>config.ini</code>放置在同级目录,config 配置说明请见 <a class="link"   href="https://natapp.cn/article/config_ini" >https://natapp.cn/article/config_ini <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>将authtoken等配置 写入 config.ini中.需要注意的是 务必关闭 关闭Web管理界面 (登录网站-&gt;我的隧道-&gt;配置)</p>
+</li>
+<li><p>测试运行情况</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">./usr/natapp/natapp</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p><a class="link"   href="https://raw.githubusercontent.com/natapp/natapp_autostart/master/RaspberryPi/natapp" >下载 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>自启动脚本并放在<code>/etc/init.d/</code> 下</p>
+</li>
+<li><p>赋于自启动脚本权限并测试启动</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod 755 /etc/init.d/natapp</span><br><span class="line">sudo /etc/init.d/natapp start</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>加入开机自启动</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/init.d</span><br><span class="line">sudo update-rc.d natapp defaults 90</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>重启</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h3 id="参见-1"><a href="#参见-1" class="headerlink" title="参见"></a>参见</h3>]]></content>
+      <categories>
+        <category>树莓派</category>
+        <category>设置</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>respberry</tag>
+        <tag>内网穿透</tag>
+        <tag>zerotier</tag>
+        <tag>natapp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树莓派更换软件源</title>
+    <url>/2024/07/24/respberry_pi/change_software_source/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="软硬件检查"><a href="#软硬件检查" class="headerlink" title="软硬件检查"></a>软硬件检查</h2><h3 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h3><ul>
+<li>树莓派4B</li>
+</ul>
+<h3 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h3><ul>
+<li><p>查看系统架构</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">uname -m</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>查看<code>Debian</code>版本</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/debian_version</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h2 id="更换清华源"><a href="#更换清华源" class="headerlink" title="更换清华源"></a>更换清华源</h2><h3 id="修改-etc-apt-sources-list文件"><a href="#修改-etc-apt-sources-list文件" class="headerlink" title="修改/etc/apt/sources.list文件"></a>修改<code>/etc/apt/sources.list</code>文件</h3><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware</span></span><br><span class="line"></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware</span></span><br><span class="line"></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="修改-etc-apt-sources-list-d-raspi-list-文件"><a href="#修改-etc-apt-sources-list-d-raspi-list-文件" class="headerlink" title="修改 /etc/apt/sources.list.d/raspi.list 文件"></a>修改 <code>/etc/apt/sources.list.d/raspi.list</code> 文件</h3><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ bookworm main</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">deb http://archive.raspberrypi.com/debian/ bookworm main</span></span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>编辑镜像站后，请使用<code>sudo apt-get update</code>命令，更新软件源列表，同时检查您的编辑是否正确</p>
+</blockquote>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2>]]></content>
+      <categories>
+        <category>树莓派</category>
+        <category>设置</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>respberry</tag>
+        <tag>软件源</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Hexo搭建个人网站</title>
-    <url>/2024/06/27/tutorial/build_hexo/</url>
+    <url>/2024/07/24/tutorial/build_hexo/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h1><p>Hexo 是一款基于Node.js的快速、简洁且高效的博客框架。Hexo 使用 <a class="link"   href="http://daringfireball.net/projects/markdown/" >Markdown <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>或其他标记语言解析文章，可在几秒内生成静态网页。</p>
 <p><a class="link"   href="https://lexcao.io/zh/posts/jekyll-hugo-hexo/" >why Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
