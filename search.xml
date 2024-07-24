@@ -12,7 +12,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="./NAT_Traversal/zerotier_create_network.png"
+                     data-src="zerotier_create_network.png"
                       alt="image-20240724110528836" style="zoom:50%;" 
                 ></li>
 </ol>
@@ -35,7 +35,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="./NAT_Traversal/auth_new_client.png"
+                     data-src="auth_new_client.png"
                       alt="认证" style="zoom:50%;" 
                 ></li>
 </ol>
@@ -46,7 +46,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="./NAT_Traversal/buy_tunnel.png"
+                     data-src="buy_tunnel.png"
                       alt="image-20240724113055777" style="zoom:50%;" 
                 >
 </li>
@@ -54,7 +54,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="./NAT_Traversal/copy_auth.png"
+                     data-src="copy_auth.png"
                       alt="image-20240724113510300" style="zoom:50%;" 
                 ></li>
 </ol>
