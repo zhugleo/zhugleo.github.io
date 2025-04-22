@@ -124,8 +124,145 @@
       </tags>
   </entry>
   <entry>
+    <title>树莓派安装immortalwrt</title>
+    <url>/2025/04/22/respberry_pi/immortalwrt/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="什么是immortalwrt"><a href="#什么是immortalwrt" class="headerlink" title="什么是immortalwrt"></a>什么是immortalwrt</h2><p><code>ImmortalWrt</code>是<code>OpenWrt</code>的一个分支版本，主要针对中国大陆用户优化，两者主要特点及差异如下：<br>当然，这里提供一个更为详细的对比表格，突出ImmortalWrt与OpenWrt之间的差异：</p>
+<table>
+<thead>
+<tr>
+<th>特性&#x2F;方面</th>
+<th>OpenWrt</th>
+<th>ImmortalWrt</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>起源与发展</strong></td>
+<td>开源项目，起始于2004年，致力于为嵌入式设备提供一个灵活的Linux发行版。</td>
+<td>基于OpenWrt的一个分支，旨在解决一些长期存在的问题，并增加对新旧硬件的支持。</td>
+</tr>
+<tr>
+<td><strong>社区活跃度</strong></td>
+<td>拥有庞大的全球社区，支持多种语言和技术文档。</td>
+<td>社区相对较小但非常活跃，特别针对中国大陆用户优化了软件包和功能。</td>
+</tr>
+<tr>
+<td><strong>更新频率</strong></td>
+<td>定期发布稳定版本，同时有开发快照版供测试。</td>
+<td>更新较为频繁，快速响应新硬件支持及安全补丁需求。</td>
+</tr>
+<tr>
+<td><strong>硬件兼容性</strong></td>
+<td>支持广泛的路由器和其他网络设备，包括最新的高端型号。</td>
+<td>在保持对新硬件支持的同时，也注重对老旧设备的支持。</td>
+</tr>
+<tr>
+<td><strong>定制能力</strong></td>
+<td>高度可定制，允许用户通过opkg安装或移除软件包。</td>
+<td>提供更强的定制能力，易于添加非官方插件，适合高级用户。</td>
+</tr>
+<tr>
+<td><strong>软件包管理</strong></td>
+<td>使用opkg作为默认包管理系统，类似于apt或yum。</td>
+<td>除了标准的opkg外，还可能提供额外的国内镜像源以加速下载。</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>广泛应用于家庭、企业乃至特定场景如物联网等。</td>
+<td>同样适用于上述场合，但在科学上网等方面提供了更多预配置选项。</td>
+</tr>
+<tr>
+<td><strong>中文支持</strong></td>
+<td>支持多国语言，但官方资源主要以英文为主。</td>
+<td>对中文用户更加友好，提供丰富的中文教程和论坛讨论。</td>
+</tr>
+<tr>
+<td><strong>默认登录地址</strong></td>
+<td><code>http://192.168.1.1/</code> 或 <code>http://openwrt.lan/</code></td>
+<td><code>http://192.168.1.1/</code> 或 <code>http://immortalwrt.lan/</code></td>
+</tr>
+<tr>
+<td><strong>防火墙系统</strong></td>
+<td>最新版开始采用基于nftables的firewall4防火墙。</td>
+<td>可能混用iptables和nftables防火墙，根据版本不同有所变化。</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>提供一系列安全特性，如防火墙规则、SSL&#x2F;TLS加密支持等。</td>
+<td>强调安全性，及时更新补丁，支持更多的隐私保护措施。</td>
+</tr>
+<tr>
+<td><strong>开发者与技术爱好者</strong></td>
+<td>非常适合喜欢探索新技术和自定义设置的技术爱好者。</td>
+<td>更加偏向于追求极致性能和定制化的发烧友级别用户。</td>
+</tr>
+<tr>
+<td><strong>稳定性</strong></td>
+<td>被认为是更稳定的选择，适合寻求可靠性的用户。</td>
+<td>提供较高的稳定性和可靠性，但可能在某些情况下为了引入新功能而牺牲部分稳定性。</td>
+</tr>
+</tbody></table>
+<h2 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h2><ol>
+<li>一台树莓派4b</li>
+<li>一张16G的SD卡</li>
+<li>一个SD卡读卡器</li>
+<li>一台用于烧写SD卡的电脑</li>
+<li>一根网线</li>
+<li>家庭网络</li>
+<li>一个USB转Type-C转接线 (如果电脑有USB接口可忽略)</li>
+</ol>
+<h2 id="安装immortalwrt"><a href="#安装immortalwrt" class="headerlink" title="安装immortalwrt"></a>安装immortalwrt</h2><h3 id="下载immortalwrt的镜像文件"><a href="#下载immortalwrt的镜像文件" class="headerlink" title="下载immortalwrt的镜像文件"></a>下载immortalwrt的镜像文件</h3><h3 id="将镜像文件烧写到SD卡"><a href="#将镜像文件烧写到SD卡" class="headerlink" title="将镜像文件烧写到SD卡"></a>将镜像文件烧写到SD卡</h3><h3 id="启动并连接树莓派"><a href="#启动并连接树莓派" class="headerlink" title="启动并连接树莓派"></a>启动并连接树莓派</h3><h3 id="配置immortalwrt"><a href="#配置immortalwrt" class="headerlink" title="配置immortalwrt"></a>配置immortalwrt</h3><h3 id="参见"><a href="#参见" class="headerlink" title="参见"></a>参见</h3>]]></content>
+      <categories>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>immortalwrt</tag>
+        <tag>openwrt</tag>
+        <tag>软路由</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树莓派应用安装列表</title>
+    <url>/2024/07/25/respberry_pi/software/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="树莓派应用列表"><a href="#树莓派应用列表" class="headerlink" title="树莓派应用列表"></a>树莓派应用列表</h1><h2 id="zerotier"><a href="#zerotier" class="headerlink" title="zerotier"></a>zerotier</h2><p>内网穿透工具，有免费网络</p>
+<p>安装教程</p>
+<h2 id="natapp"><a href="#natapp" class="headerlink" title="natapp"></a>natapp</h2><p>内网穿透工具，认证后有两条免费隧道</p>
+<p>安装教程</p>
+<blockquote>
+<p>免费通道url不固定， 使用webhook通知， 定时检验url是否变更</p>
+</blockquote>
+<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><p>反向代理工具</p>
+<p>安装教程</p>
+<h2 id="aria2"><a href="#aria2" class="headerlink" title="aria2"></a>aria2</h2><p>开源下载管理器</p>
+<p>安装教程</p>
+<h2 id="aria-ng"><a href="#aria-ng" class="headerlink" title="aria-ng"></a>aria-ng</h2><p>aria2的web前端</p>
+<p>安装教程</p>
+<h2 id="wetty"><a href="#wetty" class="headerlink" title="wetty"></a>wetty</h2><p>网页版ssh工具</p>
+<p>安装教程</p>
+<blockquote>
+<p>高版本font-awsome依赖问题 2.5.0正常</p>
+</blockquote>
+<h2 id="alist"><a href="#alist" class="headerlink" title="alist"></a>alist</h2><p>支持多种存储的文件列表程序</p>
+<p>安装教程</p>
+]]></content>
+      <categories>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>respberry</tag>
+        <tag>zerotier</tag>
+        <tag>natapp</tag>
+        <tag>nginx</tag>
+        <tag>alist</tag>
+        <tag>wetty</tag>
+        <tag>aria2</tag>
+        <tag>aria2-ng</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Hexo搭建个人网站</title>
-    <url>/2024/07/24/tutorial/build_hexo/</url>
+    <url>/2025/04/22/tutorial/build_hexo/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h1><p>Hexo 是一款基于Node.js的快速、简洁且高效的博客框架。Hexo 使用 <a class="link"   href="http://daringfireball.net/projects/markdown/" >Markdown <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>或其他标记语言解析文章，可在几秒内生成静态网页。</p>
 <p><a class="link"   href="https://lexcao.io/zh/posts/jekyll-hugo-hexo/" >why Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
